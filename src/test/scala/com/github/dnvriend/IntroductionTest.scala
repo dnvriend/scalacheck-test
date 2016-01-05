@@ -18,7 +18,7 @@ package com.github.dnvriend
 
 import org.scalacheck._
 
-class SimpleTest extends TestSpec {
+class IntroductionTest extends TestSpec {
 
   /**
    * A `property` is the testable unit in ScalaCheck. There are several ways to create properties in ScalaCheck
@@ -45,8 +45,8 @@ class SimpleTest extends TestSpec {
   }
 
   it should "reverse a list" in {
-    forAll { l: List[String] ⇒
-      l.reverse.reverse shouldBe l
+    forAll { xs: List[String] ⇒
+      xs.reverse.reverse shouldBe xs
     }
   }
 
