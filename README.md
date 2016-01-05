@@ -9,6 +9,11 @@ specifications with random automatic test data generation.
 * [Rickard Nilsson - ScalaCheck User Guide](https://github.com/rickynils/scalacheck/wiki/User-Guide)
 * [Oscar Renalias - ScalaCheck Cookbook](https://github.com/oscarrenalias/scalacheck-cookbook/blob/master/markdown/TOC.md)
 
+# Video
+* [Kelsey Gilmore-Innis - I Dream of Gen'ning: ScalaCheck Beyond the Basics](https://www.youtube.com/watch?v=lgyGFG6hBa0)
+* [Jessica Kerr - Property-Based Testing for Better Code](https://www.youtube.com/watch?v=shngiiBfD80)
+* [Debasish Ghosh - Property based Testing for Functional Domain Models](https://www.youtube.com/watch?v=W0oFzBps-fg)
+
 # Ourline
 [ScalaCheck](https://www.scalacheck.org/) is a tool for testing Scala and Java programs, based on property specifications 
 and automatic test data generation. The basic idea is that you define a property that specifies the behaviour of a 
