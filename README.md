@@ -21,14 +21,13 @@ in a random fashion, so you don't have to worry about any missed cases.
 * Support for custom data generators (but a lot of generators come out of the box)
 * Collection of statistical information about the input data
 
-## Benefits compared to traditional unit testing:
+## Benefits
+Compared to traditional unit testing frameworks, ScalaCheck has the following benefits:
 
 * Automatic generation of data allows developers to focus on defining the purpose of the actual test case, 
 rather than spending time and energy looking for corner cases by themselves
-
-Property-based tests provide a lot more testing for a lot less code than assertion-based tests
-
-Can help in scenarios where whole classes of test cases have to be tested and it is not feasible to write tests for all distinct test scenarios
+* Property-based tests provide a lot more testing for a lot less code than assertion-based tests
+* Can help in scenarios where whole classes of test cases have to be tested and it is not feasible to write tests for all distinct test scenarios
 
 ## Limitations
 ScalaCheck runs a whole lot of test cases so it is better not to use it on functions that have side effects like 
