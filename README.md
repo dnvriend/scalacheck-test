@@ -56,8 +56,7 @@ ScalaTest supports two styles of property-based testing: `ScalaTest-style` by mi
 and `ScalaCheck-style` by mixing in [org.scalatest.prop.Checkers](http://doc.scalatest.org/2.2.4/#org.scalatest.prop.Checkers).
 
 The advantage of using ScalaTest together with ScalaCheck with `PropertyChecks` is that ScalaTest’s matchers 
-(MustMatchers and ShouldMatchers) can be used to validate if a property holds, which provides additional readability 
-to the code.
+can be used to validate if a property holds, which provides additional readability to the code.
 
 The following is an example using the ScalaTest style:
 
@@ -73,4 +72,3 @@ class SimpleTest extends FlatSpec with Matchers with PropertyChecks {
   }
 }
 ```
-
