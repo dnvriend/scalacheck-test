@@ -35,8 +35,13 @@ class IntroductionTest extends TestSpec {
    */
 
   /**
-   * For all the tests below, ScalaCheck generates random instances of the function parameters
-   * and evaluates the results, reporting any failing cases.
+   * For all the tests below, ScalaCheck `generates` random instances of the function
+   * parameters and evaluates the results, reporting any failing cases.
+   *
+   * ScalaCheck is really good in finding counter examples to your assertions, ie. it
+   * does it best to make your assertion fail! After it has done so, it will shrink the
+   * failing input parameters and report those. Based on the failing input parameters
+   * you can change the assertion.
    */
 
   "String" should "append each other with the concat method" in {
