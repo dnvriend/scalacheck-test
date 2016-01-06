@@ -17,6 +17,7 @@
 package com.github.dnvriend
 
 import org.scalacheck._
+import org.scalatest.exceptions.TestFailedException
 
 class IntroductionTest extends TestSpec {
 
@@ -44,21 +45,67 @@ class IntroductionTest extends TestSpec {
     }
   }
 
-  it should "reverse a list" in {
-    forAll { xs: List[String] ⇒
-      xs.reverse.reverse shouldBe xs
-    }
-  }
-
   it should "end with s2 when appended" in {
     forAll { (s1: String, s2: String) ⇒
       (s1 + s2).endsWith(s2) shouldBe true
     }
   }
 
+  it should "the following assertion should fail when s1.length == 0 and s2.length == 0" in {
+    an[TestFailedException] should be thrownBy forAll { (s1: String, s2: String) ⇒
+      s1.length should (be < (s1 + s2).length)
+    }
+  }
+
+  it should "concatenate two strings, the first string should be smaller or equal than the concatenation" in {
+    forAll { (s1: String, s2: String) ⇒
+      s1.length should (be <= (s1 + s2).length)
+    }
+  }
+
   "List" should "append each other with the append method" in {
     forAll { (xs: List[Int], xy: List[Int]) ⇒
       xs.size + xy.size shouldBe (xs ::: xy).size
+    }
+  }
+
+  it should "should be reversable" in {
+    forAll { xs: List[String] ⇒
+      xs.reverse.reverse shouldBe xs
+    }
+  }
+
+  it should "failing reversing two lists and zipping them is the same as first zipping them and then reversing the resulting list of pairs" in {
+    a[TestFailedException] should be thrownBy forAll { (a: List[Int], b: List[Int]) ⇒
+      // note that a and b are lists and do not have to have the same length
+      // and in that case the test will fail.
+      (a.reverse zip b.reverse) shouldBe (a zip b).reverse
+    }
+  }
+
+  it should "reversing two lists and zipping them is the same as first zipping them and then reversing the resulting list of pairs" in {
+    forAll { (a: List[Int], b: List[Int]) ⇒
+      // note that a and b are lists and do not have to have the same length
+      // and in that case the test will fail.
+
+      // this can be fixed by creating two lists that have the same length
+      // based on the generated lists
+      val a1 = a.take(b.length)
+      val b1 = b.take(a.length)
+      (a1.reverse zip b1.reverse) shouldBe (a1 zip b1).reverse
+    }
+  }
+
+  "Map" should "fail increase size after a new element has been added" in {
+    a[TestFailedException] should be thrownBy forAll { (m: Map[Int, Int], key: Int, value: Int) ⇒
+      (m + (key -> value)).size should equal(m.size + 1)
+    }
+  }
+
+  it should "increase size after a new element has been added" in {
+    forAll { (m: Map[Int, Int], key: Int, value: Int) ⇒
+      val m1 = m - key
+      (m1 + (key -> value)).size should equal(m1.size + 1)
     }
   }
 
