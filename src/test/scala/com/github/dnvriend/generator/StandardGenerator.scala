@@ -63,7 +63,7 @@ trait StandardGenerator {
     def isDomainDepleted(min: Int, max: Int): Boolean = {
       if (max - min + 1 == 0) history.isEmpty
       val t = history.size / (max - min + 1)
-      if (t > 0.9) t >= 0.99 else false
+      t >= 0.99
     }
 
     override def choose(min: Int, max: Int): Gen[Int] = for {
