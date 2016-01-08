@@ -6,10 +6,17 @@ version := "1.0.0"
 
 scalaVersion := "2.11.7"
 
-libraryDependencies ++= Seq (
-  "org.scalatest" %% "scalatest" % "2.2.4" % "test",
-  "org.scalacheck" %% "scalacheck" % "1.12.5" % "test"
-)
+libraryDependencies ++= {
+  val akkaVersion = "2.4.1"
+  val akkaStreamAndHttpVersion = "2.0.1"
+  Seq(
+    "com.typesafe.akka" %% "akka-actor" % akkaVersion,
+    "com.typesafe.akka" %% "akka-stream-experimental" % akkaStreamAndHttpVersion,
+    "com.typesafe.akka" %% "akka-stream-testkit-experimental" % akkaStreamAndHttpVersion % Test,
+    "org.scalatest" %% "scalatest" % "2.2.4" % Test,
+    "org.scalacheck" %% "scalacheck" % "1.12.5" % Test
+  )
+}
 
 licenses +=("Apache-2.0", url("http://opensource.org/licenses/apache2.0.php"))
 

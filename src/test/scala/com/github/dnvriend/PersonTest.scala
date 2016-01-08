@@ -16,8 +16,9 @@
 
 package com.github.dnvriend
 
-import com.github.dnvriend.generator.PersonGenerator
+import akka.stream.scaladsl.Source
 import com.github.dnvriend.generator.PersonGenerator.Person
+import com.github.dnvriend.generator.{ GeneratorImplicits, PersonGenerator }
 
 class PersonTest extends TestSpec {
   it should "generate random persons" in {
@@ -39,5 +40,16 @@ class PersonTest extends TestSpec {
         person shouldBe Person(person.name, person.age, person.gender, person.salary, person.key, person.id)
       }
     }
+  }
+
+  it should "implicitly convert a Generator to an Iterator for use in a Source" in {
+    import GeneratorImplicits._
+    val xs: List[Person] = Source.fromIterator(() ⇒ PersonGenerator.genPerson)
+      .take(25)
+      .runFold(List.empty[Person])(_ :+ _).futureValue
+
+    xs should not be empty
+    xs.size shouldBe 25
+    xs.foreach(_ shouldBe a[Person])
   }
 }
