@@ -11,6 +11,7 @@ specifications with random automatic test data generation.
 * [Rickard Nilsson - Hands-on ScalaCheck](http://ceres.hh.se/mediawiki/images/0/01/Hands_on_scala.pdf)
 
 # Video
+* [Parleys - Scala Days 2014 - Rickard Nilsson - Testing Stateful Systems with ScalaCheck](https://www.parleys.com/tutorial/testing-stateful-systems-scalacheck)
 * [Kelsey Gilmore-Innis - I Dream of Gen'ning: ScalaCheck Beyond the Basics](https://www.youtube.com/watch?v=lgyGFG6hBa0)
 * [Jessica Kerr - Property-Based Testing for Better Code](https://www.youtube.com/watch?v=shngiiBfD80)
 * [Debasish Ghosh - Property based Testing for Functional Domain Models](https://www.youtube.com/watch?v=W0oFzBps-fg)
