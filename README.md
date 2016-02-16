@@ -8,6 +8,7 @@ specifications with random automatic test data generation.
 # Documentation
 * [Rickard Nilsson - ScalaCheck User Guide](https://github.com/rickynils/scalacheck/wiki/User-Guide)
 * [Oscar Renalias - ScalaCheck Cookbook](https://github.com/oscarrenalias/scalacheck-cookbook/blob/master/markdown/TOC.md)
+* [Rickard Nilsson - Hands-on ScalaCheck](http://ceres.hh.se/mediawiki/images/0/01/Hands_on_scala.pdf)
 
 # Video
 * [Kelsey Gilmore-Innis - I Dream of Gen'ning: ScalaCheck Beyond the Basics](https://www.youtube.com/watch?v=lgyGFG6hBa0)

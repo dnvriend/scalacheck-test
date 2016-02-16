@@ -18,24 +18,42 @@ package com.github.dnvriend.generator
 
 import java.util.UUID
 
-import org.scalacheck.Gen
+import org.scalacheck.{ Arbitrary, Gen }
 
 object PersonGenerator extends StandardGenerator {
 
-  case class Person(name: String, age: Int, gender: Char, salary: Double, key: UUID, id: Option[Long])
+  sealed trait Gender
+  final object Male extends Gender
+  final object Female extends Gender
 
-  val genSalary = Gen.const(4500.00)
+  case class Person(name: String, age: Int, gender: Gender, salary: Double, key: UUID, id: Option[Long])
 
-  val genGender = Gen.oneOf('M', 'F')
+  val genSalary = Gen.posNum[Double]
+
+  val genGender: Gen[Gender] = Gen.oneOf(Male, Female)
+
+  val ageGen: Gen[Int] = Gen.choose(0, 110)
 
   val genPerson = for {
     name ← Gen.alphaStr
-    age ← Gen.choose(0, 110)
+    age ← ageGen
     gender ← genGender
     salary ← genSalary
     key ← Gen.uuid
-    id ← Gen.option(genNonNegativeUniqueLong)
+    id ← Gen.option(Gen.posNum[Long])
   } yield Person(name, age, gender, salary, key, id)
+
+  /**
+    * ScalaCheck can generate the result of a function, by generating arbitrary parameters. Since each case class
+    * is a function, we can get generators for free.
+    */
+  def randomPerson: Option[Person] = {
+    implicit val genderArbitraty: Arbitrary[Gender] = Arbitrary(genGender)
+    implicit val uuidArbitraty: Arbitrary[UUID] = Arbitrary(Gen.uuid)
+    implicit val posDoubleArbitrary: Arbitrary[Double] = Arbitrary(genSalary)
+    implicit val ageArbitrary: Arbitrary[Int] = Arbitrary(ageGen)
+    Gen.resultOf(Person).sample
+  }
 
   val genListPersons: Gen[List[Person]] = Gen.listOf(genPerson)
 

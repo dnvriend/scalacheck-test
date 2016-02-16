@@ -22,13 +22,13 @@ import akka.stream.scaladsl.Source
 import akka.stream.{ ActorMaterializer, Materializer }
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.prop.PropertyChecks
-import org.scalatest.{ BeforeAndAfterAll, FlatSpec, Matchers }
+import org.scalatest.{ OptionValues, BeforeAndAfterAll, FlatSpec, Matchers }
 
 import scala.concurrent.duration._
 import scala.concurrent.{ ExecutionContext, Future }
 import scala.util.Try
 
-class TestSpec extends FlatSpec with Matchers with ScalaFutures with BeforeAndAfterAll with PropertyChecks {
+class TestSpec extends FlatSpec with Matchers with ScalaFutures with BeforeAndAfterAll with PropertyChecks with OptionValues {
   implicit val system: ActorSystem = ActorSystem()
   implicit val ec: ExecutionContext = system.dispatcher
   implicit val mat: Materializer = ActorMaterializer()

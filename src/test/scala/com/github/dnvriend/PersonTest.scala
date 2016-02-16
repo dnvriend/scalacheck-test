@@ -52,4 +52,8 @@ class PersonTest extends TestSpec {
     xs.size shouldBe 25
     xs.foreach(_ shouldBe a[Person])
   }
+
+  it should "generate a random Person using Gen.resultOf[Person]" in {
+    println(PersonGenerator.randomPerson.value)
+  }
 }
