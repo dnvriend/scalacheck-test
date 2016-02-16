@@ -7,14 +7,18 @@ version := "1.0.0"
 scalaVersion := "2.11.7"
 
 libraryDependencies ++= {
-  val akkaVersion = "2.4.1"
-  val akkaStreamAndHttpVersion = "2.0.1"
+  val akkaVersion = "2.4.2-RC3"
   Seq(
     "com.typesafe.akka" %% "akka-actor" % akkaVersion,
-    "com.typesafe.akka" %% "akka-stream-experimental" % akkaStreamAndHttpVersion,
-    "com.typesafe.akka" %% "akka-stream-testkit-experimental" % akkaStreamAndHttpVersion % Test,
-    "org.scalatest" %% "scalatest" % "2.2.4" % Test,
-    "org.scalacheck" %% "scalacheck" % "1.12.5" % Test
+    "com.typesafe.akka" %% "akka-stream" % akkaVersion,
+    "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
+    "com.typesafe.akka" %% "akka-stream-testkit" % akkaVersion % Test,
+//    "org.scalatest" %% "scalatest" % "2.2.6" % Test,
+//    "org.scalacheck" % "scalacheck_2.11" % "1.13.0" % Test
+    "org.scalacheck" % "scalacheck_2.11" % "1.12.5" % Test,
+    "org.scalactic" %% "scalactic" % "3.0.0-M15" % Test,
+    "org.scalatest" %% "scalatest" % "3.0.0-M15" % Test
+
   )
 }
 

@@ -16,13 +16,14 @@
 
 package com.github.dnvriend
 
+import akka.NotUsed
 import akka.actor._
 import akka.event.{ Logging, LoggingAdapter }
 import akka.stream.scaladsl.Source
 import akka.stream.{ ActorMaterializer, Materializer }
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.prop.PropertyChecks
-import org.scalatest.{ OptionValues, BeforeAndAfterAll, FlatSpec, Matchers }
+import org.scalatest.{ BeforeAndAfterAll, FlatSpec, Matchers, OptionValues }
 
 import scala.concurrent.duration._
 import scala.concurrent.{ ExecutionContext, Future }
@@ -42,7 +43,7 @@ class TestSpec extends FlatSpec with Matchers with ScalaFutures with BeforeAndAf
   /**
    * Returns a Source[Int, Unit]
    */
-  def withIterator[T](start: Int = 0)(f: Source[Int, Unit] ⇒ T): T =
+  def withIterator[T](start: Int = 0)(f: Source[Int, NotUsed] ⇒ T): T =
     f(Source.fromIterator(() ⇒ Iterator from start))
 
   override protected def afterAll(): Unit = {

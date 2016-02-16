@@ -44,9 +44,9 @@ object PersonGenerator extends StandardGenerator {
   } yield Person(name, age, gender, salary, key, id)
 
   /**
-    * ScalaCheck can generate the result of a function, by generating arbitrary parameters. Since each case class
-    * is a function, we can get generators for free.
-    */
+   * ScalaCheck can generate the result of a function, by generating arbitrary parameters. Since each case class
+   * is a function, we can get generators for free.
+   */
   def randomPerson: Option[Person] = {
     implicit val genderArbitraty: Arbitrary[Gender] = Arbitrary(genGender)
     implicit val uuidArbitraty: Arbitrary[UUID] = Arbitrary(Gen.uuid)
