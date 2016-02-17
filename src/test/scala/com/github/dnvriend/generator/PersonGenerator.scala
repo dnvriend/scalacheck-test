@@ -18,6 +18,8 @@ package com.github.dnvriend.generator
 
 import java.util.UUID
 
+import akka.NotUsed
+import akka.stream.scaladsl.Source
 import org.scalacheck.{ Arbitrary, Gen }
 
 object PersonGenerator extends StandardGenerator {
@@ -47,15 +49,25 @@ object PersonGenerator extends StandardGenerator {
    * ScalaCheck can generate the result of a function, by generating arbitrary parameters. Since each case class
    * is a function, we can get generators for free.
    */
-  def randomPerson: Option[Person] = {
+  val genPersonRandom: Gen[Person] = {
     implicit val genderArbitraty: Arbitrary[Gender] = Arbitrary(genGender)
     implicit val uuidArbitraty: Arbitrary[UUID] = Arbitrary(Gen.uuid)
     implicit val posDoubleArbitrary: Arbitrary[Double] = Arbitrary(genSalary)
     implicit val ageArbitrary: Arbitrary[Int] = Arbitrary(ageGen)
-    Gen.resultOf(Person).sample
+    Gen.resultOf(Person)
   }
 
+  implicit val arbitraryPersonRandom: Arbitrary[Person] = Arbitrary(genPersonRandom)
+
   val genListPersons: Gen[List[Person]] = Gen.listOf(genPerson)
+
+  implicit val arbitraryListPerson: Arbitrary[List[Person]] = Arbitrary(genListPersons)
+
+  val genPersonSource: Gen[Source[Person, NotUsed]] = for {
+    person ← genListPersons
+  } yield Source(person)
+
+  implicit val arbitraryPersonSource: Arbitrary[Source[Person, NotUsed]] = Arbitrary(genPersonSource)
 
   def randomPersons: List[Person] = genListPersons.sample.getOrElse(Nil)
 }

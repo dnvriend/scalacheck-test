@@ -16,34 +16,33 @@
 
 package com.github.dnvriend
 
+import akka.NotUsed
 import akka.stream.scaladsl.Source
-import com.github.dnvriend.generator.PersonGenerator.Person
-import com.github.dnvriend.generator.{ GeneratorImplicits, PersonGenerator }
+import com.github.dnvriend.generator.PersonGenerator
+import com.github.dnvriend.generator.PersonGenerator.{ Person, arbitraryListPerson, arbitraryPersonRandom, arbitraryPersonSource }
 
 class PersonTest extends TestSpec {
-  it should "generate random persons" in {
-    forAll(PersonGenerator.genPerson) { person ⇒
+  it should "generate random persons" in
+    forAll { (person: Person) ⇒
       person shouldBe Person(person.name, person.age, person.gender, person.salary, person.key, person.id)
     }
-  }
 
-  it should "generate a random list of persons" in {
-    val xs: List[Person] = PersonGenerator.randomPersons
-    xs.foreach { person ⇒
-      person shouldBe Person(person.name, person.age, person.gender, person.salary, person.key, person.id)
+  it should "generate a random list of persons" in
+    forAll { (xs: List[Person]) ⇒
+      xs.foreach { person ⇒
+        person shouldBe Person(person.name, person.age, person.gender, person.salary, person.key, person.id)
+      }
     }
-  }
 
-  it should "generate random list of persons" in {
+  it should "generate random list of persons" in
     forAll(PersonGenerator.genListPersons) { xs ⇒
       xs.foreach { person ⇒
         person shouldBe Person(person.name, person.age, person.gender, person.salary, person.key, person.id)
       }
     }
-  }
 
   it should "implicitly convert a Generator to an Iterator for use in a Source" in {
-    import GeneratorImplicits._
+    import com.github.dnvriend.generator.GeneratorImplicits._
     val xs: List[Person] = Source.fromIterator(() ⇒ PersonGenerator.genPerson)
       .take(25)
       .runFold(List.empty[Person])(_ :+ _).futureValue
@@ -53,7 +52,17 @@ class PersonTest extends TestSpec {
     xs.foreach(_ shouldBe a[Person])
   }
 
+  it should "generate random Person Sources" in
+    forAll { (src: Source[Person, NotUsed]) ⇒
+      val xs: List[Person] = src.take(25).runFold(List.empty[Person])(_ :+ _).futureValue
+      xs.foreach { person ⇒
+        person shouldBe Person(person.name, person.age, person.gender, person.salary, person.key, person.id)
+      }
+    }
+
   it should "generate a random Person using Gen.resultOf[Person]" in {
-    println(PersonGenerator.randomPerson.value)
+    PersonGenerator.genPersonRandom.sample.value should matchPattern {
+      case Person(_, _, _, _, _, _) ⇒
+    }
   }
 }
