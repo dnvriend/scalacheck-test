@@ -16,11 +16,14 @@
 
 package com.github.dnvriend
 
+import java.io.File
+
 import akka.NotUsed
 import akka.actor._
 import akka.event.{ Logging, LoggingAdapter }
-import akka.stream.scaladsl.Source
-import akka.stream.{ ActorMaterializer, Materializer }
+import akka.stream.scaladsl.{ Flow, Sink, FileIO, Source }
+import akka.stream.{ SinkShape, ActorMaterializer, Materializer }
+import akka.util.ByteString
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.prop.PropertyChecks
 import org.scalatest.{ BeforeAndAfterAll, FlatSpec, Matchers, OptionValues }
@@ -39,6 +42,16 @@ class TestSpec extends FlatSpec with Matchers with ScalaFutures with BeforeAndAf
   implicit class FutureToTry[T](f: Future[T]) {
     def toTry: Try[T] = Try(f.futureValue)
   }
+
+  def writeToFile(str: String, file: File) =
+    Source.single(str)
+      .map(ByteString(_))
+      .runWith(FileIO.toFile(file))
+
+  def writeToFile(xs: List[String], file: File) =
+    Source(xs)
+      .map(ByteString(_))
+      .runWith(FileIO.toFile(file))
 
   /**
    * Returns a Source[Int, Unit]
